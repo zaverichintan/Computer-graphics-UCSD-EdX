@@ -191,7 +191,7 @@ void readfile(const char* filename)
             cerr << "Reached Maximum Number of Objects " << numobjects << " Will ignore further objects\n";
           } else {
             validinput = readvals(s, 1, values);
-            if (validinput)   {
+            if (validinput) {
               object * obj = &(objects[numobjects]);
               obj->size = values[0];
 
@@ -254,10 +254,9 @@ void readfile(const char* filename)
 
             vec3 axis = vec3(values[0],values[1],values[2]);
             glm::normalize(axis);
-            float angle  = values[3] * pi / 180.0;
-            mat3 tempval = Transform::rotate(angle,axis);
-						mat4 retval = mat4(tempval[0][0], tempval[0][1], tempval[0][2], 0, tempval[1][0], tempval[1][1], tempval[1][2], 0, tempval[2][0], tempval[2][1], tempval[2][2], 0, 0, 0, 0, 1);
-						rightmultiply(retval, transfstack);
+            mat4 tempval = mat4(Transform::rotate(values[3],axis));//rotates the axis byt the angle (specified in values[3])
+
+						rightmultiply(tempval, transfstack);
           }
         }
 

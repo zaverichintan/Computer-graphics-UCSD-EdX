@@ -25,13 +25,13 @@
 #include "UCSD/grader.h"
 #include "Geometry.h"
 
-using namespace std; 
+using namespace std;
 
-// Main variables in the program.  
-#define MAINPROGRAM 
-#include "variables.h" 
-#include "readfile.h" // prototypes for readfile.cpp  
-void display(void);  // prototype for display function.  
+// Main variables in the program.
+#define MAINPROGRAM
+#include "variables.h"
+#include "readfile.h" // prototypes for readfile.cpp
+void display(void);  // prototype for display function.
 
 Grader grader;
 bool allowGrader = false;
@@ -45,7 +45,7 @@ void reshape(int width, int height){
 
   float aspect = (float) w / (float) h, zNear = 0.1, zFar = 99.0 ;
   // I am changing the projection matrix to fit with the new window aspect ratio
-  if (useGlu) projection = glm::perspective(glm::radians(fovy),aspect,zNear,zFar) ; 
+  if (useGlu) projection = glm::perspective(glm::radians(fovy),aspect,zNear,zFar) ;
   else {
 	  projection = Transform::perspective(fovy,aspect,zNear,zFar) ;
   }
@@ -55,7 +55,7 @@ void reshape(int width, int height){
 
 void saveScreenshot(string fname) {
   int pix = w * h;
-  BYTE *pixels = new BYTE[3*pix];	
+  BYTE *pixels = new BYTE[3*pix];
   glReadBuffer(GL_FRONT);
   glReadPixels(0,0,w,h,GL_BGR,GL_UNSIGNED_BYTE, pixels);
 
@@ -69,13 +69,13 @@ void saveScreenshot(string fname) {
 
 
 void printHelp() {
-  std::cout << "\npress 'h' to print this message again.\n" 
-    << "press '+' or '-' to change the amount of rotation that\noccurs with each arrow press.\n" 
+  std::cout << "\npress 'h' to print this message again.\n"
+    << "press '+' or '-' to change the amount of rotation that\noccurs with each arrow press.\n"
     << "press 'i' to run image grader test cases\n"
-    << "press 'g' to switch between using glm::lookAt and glm::Perspective or your own LookAt.\n"       
+    << "press 'g' to switch between using glm::lookAt and glm::Perspective or your own LookAt.\n"
     << "press 'r' to reset the transformations.\n"
     << "press 'v' 't' 's' to do view [default], translate, scale.\n"
-    << "press ESC to quit.\n" ;      
+    << "press ESC to quit.\n" ;
 }
 
 
@@ -87,7 +87,7 @@ void keyboard(unsigned char key, int x, int y) {
       break;
     case '-':
       amount--;
-      std::cout << "amount set to " << amount << "\n" ; 
+      std::cout << "amount set to " << amount << "\n" ;
       break;
     case 'i':
       if(useGlu) {
@@ -104,8 +104,8 @@ void keyboard(unsigned char key, int x, int y) {
       break;
     case 'g':
       useGlu = !useGlu;
-      reshape(w,h) ; 
-      std::cout << "Using glm::LookAt and glm::Perspective set to: " << (useGlu ? " true " : " false ") << "\n" ; 
+      reshape(w,h) ;
+      std::cout << "Using glm::LookAt and glm::Perspective set to: " << (useGlu ? " true " : " false ") << "\n" ;
       break;
     case 'h':
       printHelp();
@@ -113,54 +113,54 @@ void keyboard(unsigned char key, int x, int y) {
     case 27:  // Escape to quit
       exit(0) ;
       break ;
-    case 'r': // reset eye and up vectors, scale and translate. 
-      eye = eyeinit ; 
-      up = upinit ; 
+    case 'r': // reset eye and up vectors, scale and translate.
+      eye = eyeinit ;
+      up = upinit ;
       amount = amountinit ;
       transop = view ;
-      sx = sy = 1.0 ; 
-      tx = ty = 0.0 ; 
-      break ;   
-    case 'v': 
+      sx = sy = 1.0 ;
+      tx = ty = 0.0 ;
+      break ;
+    case 'v':
       transop = view ;
-      std::cout << "Operation is set to View\n" ; 
-      break ; 
+      std::cout << "Operation is set to View\n" ;
+      break ;
     case 't':
-      transop = translate ; 
-      std::cout << "Operation is set to Translate\n" ; 
-      break ; 
+      transop = translate ;
+      std::cout << "Operation is set to Translate\n" ;
+      break ;
     case 's':
-      transop = scale ; 
-      std::cout << "Operation is set to Scale\n" ; 
-      break ; 
+      transop = scale ;
+      std::cout << "Operation is set to Scale\n" ;
+      break ;
   }
   glutPostRedisplay();
 }
 
-//  You will need to enter code for the arrow keys 
+//  You will need to enter code for the arrow keys
 //  When an arrow key is pressed, it will call your transform functions
 
 void specialKey(int key, int x, int y) {
   switch(key) {
     case 100: //left
       if (transop == view) Transform::left(amount, eye,  up);
-      else if (transop == scale) sx -= amount * 0.01 ; 
-      else if (transop == translate) tx -= amount * 0.01 ; 
+      else if (transop == scale) sx -= amount * 0.01 ;
+      else if (transop == translate) tx -= amount * 0.01 ;
       break;
     case 101: //up
       if (transop == view) Transform::up(amount,  eye,  up);
-      else if (transop == scale) sy += amount * 0.01 ; 
-      else if (transop == translate) ty += amount * 0.01 ; 
+      else if (transop == scale) sy += amount * 0.01 ;
+      else if (transop == translate) ty += amount * 0.01 ;
       break;
     case 102: //right
       if (transop == view) Transform::left(-amount, eye,  up);
-      else if (transop == scale) sx += amount * 0.01 ; 
-      else if (transop == translate) tx += amount * 0.01 ; 
+      else if (transop == scale) sx += amount * 0.01 ;
+      else if (transop == translate) tx += amount * 0.01 ;
       break;
     case 103: //down
       if (transop == view) Transform::up(-amount,  eye,  up);
-      else if (transop == scale) sy -= amount * 0.01 ; 
-      else if (transop == translate) ty -= amount * 0.01 ; 
+      else if (transop == scale) sy -= amount * 0.01 ;
+      else if (transop == translate) ty -= amount * 0.01 ;
       break;
   }
   glutPostRedisplay();
@@ -170,29 +170,29 @@ void init() {
   // Initialize shaders
   vertexshader = initshaders(GL_VERTEX_SHADER, "shaders/light.vert.glsl") ;
   fragmentshader = initshaders(GL_FRAGMENT_SHADER, "shaders/light.frag.glsl") ;
-  shaderprogram = initprogram(vertexshader, fragmentshader) ; 
+  shaderprogram = initprogram(vertexshader, fragmentshader) ;
   // Get locations of all uniform variables.
   enablelighting = glGetUniformLocation(shaderprogram,"enablelighting") ;
-  lightpos = glGetUniformLocation(shaderprogram,"lightposn") ;       
-  lightcol = glGetUniformLocation(shaderprogram,"lightcolor") ;       
-  numusedcol = glGetUniformLocation(shaderprogram,"numused") ;       
-  ambientcol = glGetUniformLocation(shaderprogram,"ambient") ;       
-  diffusecol = glGetUniformLocation(shaderprogram,"diffuse") ;       
-  specularcol = glGetUniformLocation(shaderprogram,"specular") ;       
-  emissioncol = glGetUniformLocation(shaderprogram,"emission") ;       
-  shininesscol = glGetUniformLocation(shaderprogram,"shininess") ;    
+  lightpos = glGetUniformLocation(shaderprogram,"lightposn") ;
+  lightcol = glGetUniformLocation(shaderprogram,"lightcolor") ;
+  numusedcol = glGetUniformLocation(shaderprogram,"numused") ;
+  ambientcol = glGetUniformLocation(shaderprogram,"ambient") ;
+  diffusecol = glGetUniformLocation(shaderprogram,"diffuse") ;
+  specularcol = glGetUniformLocation(shaderprogram,"specular") ;
+  emissioncol = glGetUniformLocation(shaderprogram,"emission") ;
+  shininesscol = glGetUniformLocation(shaderprogram,"shininess") ;
   projectionPos = glGetUniformLocation(shaderprogram, "projection");
   modelviewPos = glGetUniformLocation(shaderprogram, "modelview");
   // Initialize geometric shapes
   initBufferObjects();
-  initTeapot(); initCube(); initSphere();
+  initTeapot(); initCube(); initSphere();//initialize all the objects and bind them
 }
 
 int main(int argc, char* argv[]) {
 
   if (argc < 2) {
-    cerr << "Usage: transforms scenefile [grader input (optional)]\n"; 
-    exit(-1); 
+    cerr << "Usage: transforms scenefile [grader input (optional)]\n";
+    exit(-1);
   }
 
   FreeImage_Initialise();
@@ -206,14 +206,14 @@ int main(int argc, char* argv[]) {
   glutCreateWindow("HW2: Scene Viewer");
 
 #ifndef __APPLE__ // GLew not needed on OSX systems
-  GLenum err = glewInit() ; 
-  if (GLEW_OK != err) { 
-    std::cerr << "Error: " << glewGetString(err) << std::endl; 
-  } 
+  GLenum err = glewInit() ;
+  if (GLEW_OK != err) {
+    std::cerr << "Error: " << glewGetString(err) << std::endl;
+  }
 #endif
 
   init();
-  readfile(argv[1]) ; 
+  readfile(argv[1]) ;
   glutDisplayFunc(display);
   glutSpecialFunc(specialKey);
   glutKeyboardFunc(keyboard);

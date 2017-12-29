@@ -234,7 +234,7 @@ void solidCube(float size) {
 void solidSphere(float radius, int stacks, int slices) {
 	// No need to generate the sphere again if the previous rendering already
 	// used the same number of stacks and slices
-	if (prevStacks != stacks || prevSlices != slices){ 
+	if (prevStacks != stacks || prevSlices != slices){
 		prevStacks = stacks; prevSlices = slices;
 		sphereVertices.clear();
 		sphereNormals.clear();

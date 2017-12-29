@@ -8,13 +8,12 @@
 using namespace std;
 #include <glm/gtc/reciprocal.hpp>
 
-// // Helper rotation function.  Please implement this.
+// Helper rotation function.  Please implement this.
 mat3 Transform::rotate(const float degrees, const vec3& axis)
 {
   mat3 ret;
   // YOUR CODE FOR HW2 HERE
   mat3 I(1.0);
-  glm::normalize(axis);
 
   float x = axis.x;
   float y = axis.y;
@@ -28,7 +27,6 @@ mat3 Transform::rotate(const float degrees, const vec3& axis)
 
   return ret;
 }
-
 
 void Transform::left(float degrees, vec3& eye, vec3& up)
 {

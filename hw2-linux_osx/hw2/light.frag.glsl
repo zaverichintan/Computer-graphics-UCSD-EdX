@@ -68,8 +68,7 @@ void main (void)
         vec4 col1=vec4(0,0,0,0);
 
         for(int i=0;i<numused;i++){
-        // for(int i=0;i<10;i++){
-          if(lightposn[i].w != 1.0){
+          if(lightposn[i].w<=0.000001f){
             //directional light
             vec3 direction = normalize (lightposn[i].xyz) ; //as specified by the directional light
             vec3 half = normalize (direction + eyedirn) ;
@@ -84,8 +83,7 @@ void main (void)
           }
         }
 
-        fragColor = col1+ambient+emission;
-
+        fragColor = ambient + col1 ;
     } else {
         fragColor = vec4(color, 1.0f);
     }
